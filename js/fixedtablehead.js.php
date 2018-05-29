@@ -80,4 +80,25 @@ $( document ).ready(function() {
     	zIndex : 50
     });
     
+    
+    var listelem = $('table.liste');
+    
+	if(listelem.find('tbody').length == 0) {
+		listelem.prepend('<tbody></tbody>');
+		listelem.find('tr').each(function() {
+			$(this).remove().appendTo(listelem.find('tbody'));
+		});
+	}
+	
+	if(listelem.find('thead').length == 0) {
+		listelem.prepend('<thead></thead>');
+		listelem.find('tr.liste_titre').remove().appendTo(listelem.find('thead'));
+		//listelem.find('tr.liste_titre_filter').remove().appendTo(listelem.find('thead'));
+	}
+
+    listelem.floatThead({
+    	position: 'fixed',
+    	top: $('#id-top').height(),
+    	zIndex : 50
+    });
 });
