@@ -59,11 +59,25 @@ else header('Cache-Control: no-cache');
 
 /* Javascript library of module FixedTableHead */
 $( document ).ready(function() {
-    $('#tablelines').floatThead({
+
+	var elem = $('#tablelines');
+
+	if(elem.find('tbody').length == 0) {
+		elem.prepend('<tbody></tbody>');
+		elem.find('tr').each(function() {
+			$(this).remove().appendTo('#tablelines tbody');
+		});
+	}
+
+	if(elem.find('thead').length == 0) {
+		elem.prepend('<thead></thead>');
+		elem.find('tr:first').remove().appendTo('#tablelines thead');
+	}
+
+    elem.floatThead({
     	position: 'fixed',
     	top: $('#id-top').height(),
-    	zIndex : 200
+    	zIndex : 50
     });
-    
     
 });
