@@ -106,7 +106,7 @@ class modFixedTableHead extends DolibarrModules
 		//$this->dirs = array("/fixedtablehead/temp");
 
 		// Config pages. Put here list of php page, stored into fixedtablehead/admin directory, to use to setup module.
-		//$this->config_page_url = array("setup.php@fixedtablehead");
+		$this->config_page_url = array("setup.php@fixedtablehead");
 
 		// Dependencies
 		$this->hidden = false;			// A condition to hide module

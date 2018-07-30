@@ -17,16 +17,16 @@
  * Library javascript to enable Browser notifications
  */
 
-if (!defined('NOREQUIREUSER'))  define('NOREQUIREUSER', '1');
-if (!defined('NOREQUIREDB'))    define('NOREQUIREDB','1');
-if (!defined('NOREQUIRESOC'))   define('NOREQUIRESOC', '1');
-if (!defined('NOREQUIRETRAN'))  define('NOREQUIRETRAN','1');
-if (!defined('NOCSRFCHECK'))    define('NOCSRFCHECK', 1);
-if (!defined('NOTOKENRENEWAL')) define('NOTOKENRENEWAL', 1);
-if (!defined('NOLOGIN'))        define('NOLOGIN', 1);
-if (!defined('NOREQUIREMENU'))  define('NOREQUIREMENU', 1);
-if (!defined('NOREQUIREHTML'))  define('NOREQUIREHTML', 1);
-if (!defined('NOREQUIREAJAX'))  define('NOREQUIREAJAX','1');
+//if (!defined('NOREQUIREUSER'))  define('NOREQUIREUSER', '1');
+//if (!defined('NOREQUIREDB'))    define('NOREQUIREDB','0');
+//if (!defined('NOREQUIRESOC'))   define('NOREQUIRESOC', '0');
+//if (!defined('NOREQUIRETRAN'))  define('NOREQUIRETRAN','1');
+//if (!defined('NOCSRFCHECK'))    define('NOCSRFCHECK', 1);
+//if (!defined('NOTOKENRENEWAL')) define('NOTOKENRENEWAL', 1);
+//if (!defined('NOLOGIN'))        define('NOLOGIN', 1);
+//if (!defined('NOREQUIREMENU'))  define('NOREQUIREMENU', 1);
+//if (!defined('NOREQUIREHTML'))  define('NOREQUIREHTML', 1);
+//if (!defined('NOREQUIREAJAX'))  define('NOREQUIREAJAX','1');
 
 
 /**
@@ -55,6 +55,7 @@ header('Content-Type: application/javascript');
 // You can use CTRL+F5 to refresh your browser cache.
 if (empty($dolibarr_nocache)) header('Cache-Control: max-age=3600, public, must-revalidate');
 else header('Cache-Control: no-cache');
+
 ?>
 
 /* Javascript library of module FixedTableHead */
@@ -76,7 +77,7 @@ $( document ).ready(function() {
 
     elem.floatThead({
     	position: 'fixed',
-    	top: $('#id-top').height(),
+    	top: <?php print !empty($conf->global->FIXEDTABLEHEAD_THEME_USE_FIXED_TOPBAR)?'$(\'#id-top\').height()':'0'; ?>,
     	zIndex : 50
     });
     
@@ -98,7 +99,7 @@ $( document ).ready(function() {
 
     listelem.floatThead({
     	position: 'fixed',
-    	top: $('#id-top').height(),
+    	top: <?php print !empty($conf->global->FIXEDTABLEHEAD_THEME_USE_FIXED_TOPBAR)?'$(\'#id-top\').height()':'0'; ?>,
     	zIndex : 50
     });
 });

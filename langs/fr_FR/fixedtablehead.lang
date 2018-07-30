@@ -18,23 +18,24 @@
 #
 
 # Module label 'ModuleFixedTableHeadName'
-ModuleFixedTableHeadName = FixedTableHead
+ModuleFixedTableHeadName = Entêtes de tableau figées
 # Module description 'ModuleFixedTableHeadDesc'
-ModuleFixedTableHeadDesc = Description de FixedTableHead
+ModuleFixedTableHeadDesc = Ce module permet de figer les entêtes de tableau dans les listes et les sur les documents (propales, commandes, factures...)
 
 #
 # Page d'administration
 #
-FixedTableHeadSetup = Configuration du module FixedTableHead
+FixedTableHeadSetup = Configuration du module "Entêtes de tableau figées"
 Settings = Réglages
-FixedTableHeadSetupPage = Page de configuration du module FixedTableHead
+FixedTableHeadSetupPage = Page de configuration du module "Entêtes de tableau figées"
+FIXEDTABLEHEAD_THEME_USE_FIXED_TOPBAR=Le thème Dolibarr utilise un menu haut fixe ?
 
 #
 # Page À propos
 #
 About = À propos
-FixedTableHeadAbout = À propos de FixedTableHead
-FixedTableHeadAboutPage = Page à propos de FixedTableHead
+FixedTableHeadAbout = À propos de "Entêtes de tableaux figées"
+FixedTableHeadAboutPage = Page à propos de "Entêtes de tableau figées"
 
 #
 # Page d'exemple

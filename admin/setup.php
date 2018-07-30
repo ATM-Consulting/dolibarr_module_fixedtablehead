@@ -60,7 +60,33 @@ $arrayofparameters=array('FIXEDTABLEHEAD_MYPARAM1'=>array('css'=>'minwidth200'),
  * Actions
  */
 
-include DOL_DOCUMENT_ROOT.'/core/actions_setmoduleoptions.inc.php';
+if (preg_match('/set_(.*)/',$action,$reg))
+{
+    $code=$reg[1];
+    if (dolibarr_set_const($db, $code, GETPOST($code), 'chaine', 0, '', $conf->entity) > 0)
+    {
+        header("Location: ".$_SERVER["PHP_SELF"]);
+        exit;
+    }
+    else
+    {
+        dol_print_error($db);
+    }
+}
+
+if (preg_match('/del_(.*)/',$action,$reg))
+{
+    $code=$reg[1];
+    if (dolibarr_del_const($db, $code, 0) > 0)
+    {
+        Header("Location: ".$_SERVER["PHP_SELF"]);
+        exit;
+    }
+    else
+    {
+        dol_print_error($db);
+    }
+}
 
 
 /*
@@ -79,53 +105,34 @@ print load_fiche_titre($langs->trans($page_name), $linkback, 'object_fixedtableh
 $head = fixedtableheadAdminPrepareHead();
 dol_fiche_head($head, 'settings', '', -1, "fixedtablehead@fixedtablehead");
 
+
+
 // Setup page goes here
-/*echo $langs->trans("FixedTableHeadSetupPage");
+$form=new Form($db);
+$var=false;
+print '<table class="noborder" width="100%">';
 
 
-if ($action == 'edit')
-{
-	print '<form method="POST" action="'.$_SERVER["PHP_SELF"].'">';
-	print '<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
-	print '<input type="hidden" name="action" value="update">';
+_print_title("Parameters");
 
-	print '<table class="noborder" width="100%">';
-	print '<tr class="liste_titre"><td class="titlefield">'.$langs->trans("Parameter").'</td><td>'.$langs->trans("Value").'</td></tr>';
+// Example with a yes / no select
+_print_on_off('FIXEDTABLEHEAD_THEME_USE_FIXED_TOPBAR');
 
-	foreach($arrayofparameters as $key => $val)
-	{
-		print '<tr class="oddeven"><td>';
-		print $form->textwithpicto($langs->trans($key),$langs->trans($key.'Tooltip'));
-		print '</td><td><input name="'.$key.'"  class="flat '.(empty($val['css'])?'minwidth200':$val['css']).'" value="' . $conf->global->$key . '"></td></tr>';
-	}
+// Example with imput
+//_print_input_form_part('CONSTNAME', 'ParamLabel');
 
-	print '</table>';
+// Example with color
+//_print_input_form_part('CONSTNAME', 'ParamLabel', 'ParamDesc', array('type'=>'color'),'input','ParamHelp');
 
-	print '<br><div class="center">';
-	print '<input class="button" type="submit" value="'.$langs->trans("Save").'">';
-	print '</div>';
+// Example with placeholder
+//_print_input_form_part('CONSTNAME','ParamLabel','ParamDesc',array('placeholder'=>'http://'),'input','ParamHelp');
 
-	print '</form>';
-	print '<br>';
-}
-else
-{
-	print '<table class="noborder" width="100%">';
-	print '<tr class="liste_titre"><td class="titlefield">'.$langs->trans("Parameter").'</td><td>'.$langs->trans("Value").'</td></tr>';
+// Example with textarea
+//_print_input_form_part('CONSTNAME','ParamLabel','ParamDesc',array(),'textarea');
 
-	foreach($arrayofparameters as $key => $val)
-	{
-		print '<tr class="oddeven"><td>';
-		print $form->textwithpicto($langs->trans($key),$langs->trans($key.'Tooltip'));
-		print '</td><td>' . $conf->global->$key . '</td></tr>';
-	}
 
-	print '</table>';
+print '</table>';
 
-	print '<div class="tabsAction">';
-	print '<a class="butAction" href="'.$_SERVER["PHP_SELF"].'?action=edit">'.$langs->trans("Modify").'</a>';
-	print '</div>';
-}*/
 
 
 // Page end
@@ -133,3 +140,93 @@ dol_fiche_end();
 
 llxFooter();
 $db->close();
+
+
+function _print_title($title="")
+{
+    global $langs;
+    print '<tr class="liste_titre">';
+    print '<td>'.$langs->trans($title).'</td>'."\n";
+    print '<td align="center" width="20">&nbsp;</td>';
+    print '<td align="center" ></td>'."\n";
+    print '</tr>';
+}
+
+function _print_on_off($confkey, $title = false, $desc ='')
+{
+    global $var, $bc, $langs, $conf;
+    $var=!$var;
+    
+    print '<tr '.$bc[$var].'>';
+    print '<td>'.($title?$title:$langs->trans($confkey));
+    if(!empty($desc))
+    {
+        print '<br><small>'.$langs->trans($desc).'</small>';
+    }
+    print '</td>';
+    print '<td align="center" width="20">&nbsp;</td>';
+    print '<td align="center" width="300">';
+    print '<form method="POST" action="'.$_SERVER['PHP_SELF'].'">';
+    print '<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
+    print '<input type="hidden" name="action" value="set_'.$confkey.'">';
+    print ajax_constantonoff($confkey);
+    print '</form>';
+    print '</td></tr>';
+}
+
+function _print_input_form_part($confkey, $title = false, $desc ='', $metas = array(), $type='input', $help = false)
+{
+    global $var, $bc, $langs, $conf, $db;
+    $var=!$var;
+    
+    $form=new Form($db);
+    
+    $defaultMetas = array(
+        'name' => $confkey
+    );
+    
+    if($type!='textarea'){
+        $defaultMetas['type']   = 'text';
+        $defaultMetas['value']  = $conf->global->{$confkey};
+    }
+    
+    
+    $metas = array_merge ($defaultMetas, $metas);
+    $metascompil = '';
+    foreach ($metas as $key => $values)
+    {
+        $metascompil .= ' '.$key.'="'.$values.'" ';
+    }
+    
+    print '<tr '.$bc[$var].'>';
+    print '<td>';
+    
+    if(!empty($help)){
+        print $form->textwithtooltip( ($title?$title:$langs->trans($confkey)) , $langs->trans($help),2,1,img_help(1,''));
+    }
+    else {
+        print $title?$title:$langs->trans($confkey);
+    }
+    
+    if(!empty($desc))
+    {
+        print '<br><small>'.$langs->trans($desc).'</small>';
+    }
+    
+    print '</td>';
+    print '<td align="center" width="20">&nbsp;</td>';
+    print '<td align="right" width="300">';
+    print '<form method="POST" action="'.$_SERVER['PHP_SELF'].'">';
+    print '<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
+    print '<input type="hidden" name="action" value="set_'.$confkey.'">';
+    if($type=='textarea'){
+        print '<textarea '.$metascompil.'  >'.dol_htmlentities($conf->global->{$confkey}).'</textarea>';
+    }
+    else {
+        print '<input '.$metascompil.'  />';
+    }
+    
+    print '<input type="submit" class="butAction" value="'.$langs->trans("Modify").'">';
+    print '</form>';
+    print '</td></tr>';
+}
