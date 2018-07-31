@@ -211,7 +211,7 @@ class modFixedTableHead extends DolibarrModules
 
 		// Permissions
 		$this->rights = array();		// Permission array used by this module
-
+/*
 		$r=0;
 		$this->rights[$r][0] = $this->numero + $r;	// Permission id (must not be already used)
 		$this->rights[$r][1] = 'Read myobject of FixedTableHead';	// Permission label
@@ -232,7 +232,7 @@ class modFixedTableHead extends DolibarrModules
 		$this->rights[$r][3] = 1; 					// Permission by default for new user (0/1)
 		$this->rights[$r][4] = 'delete';				// In php code, permission will be checked by test if ($user->rights->fixedtablehead->level1->level2)
 		$this->rights[$r][5] = '';				    // In php code, permission will be checked by test if ($user->rights->fixedtablehead->level1->level2)
-
+*/
 
 		// Main menu entries
 		$this->menu = array();			// List of menus to add
@@ -241,7 +241,7 @@ class modFixedTableHead extends DolibarrModules
 		// Add here entries to declare new menus
 
 		/* BEGIN MODULEBUILDER TOPMENU */
-		$this->menu[$r++]=array('fk_menu'=>'',			                // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+		/*$this->menu[$r++]=array('fk_menu'=>'',			                // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 								'type'=>'top',			                // This is a Top menu entry
 								'titre'=>'FixedTableHead',
 								'mainmenu'=>'fixedtablehead',
@@ -253,7 +253,7 @@ class modFixedTableHead extends DolibarrModules
 								'perms'=>'1',			                // Use 'perms'=>'$user->rights->fixedtablehead->level1->level2' if you want your menu with a permission rules
 								'target'=>'',
 								'user'=>2);				                // 0=Menu for internal users, 1=external users, 2=both
-
+*/
 		/* END MODULEBUILDER TOPMENU */
 
 		/* BEGIN MODULEBUILDER LEFTMENU MYOBJECT
