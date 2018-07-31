@@ -82,7 +82,7 @@ $( document ).ready(function() {
     });
     
     
-    var listelem = $('table.liste');
+    var listelem = $('table.liste.listwithfilterbefore:not(.formdoc)');
     
 	if(listelem.find('tbody').length == 0) {
 		listelem.prepend('<tbody></tbody>');
