@@ -60,46 +60,47 @@ else header('Cache-Control: no-cache');
 
 /* Javascript library of module FixedTableHead */
 $( document ).ready(function() {
-
 	var elem = $('#tablelines');
+	if (elem.length) {
+		if (elem.find('tbody').length === 0) {
+			elem.prepend('<tbody></tbody>');
+			elem.find('tr').each(function() {
+				$(this).remove().appendTo('#tablelines tbody');
+			});
+		}
 
-	if(elem.find('tbody').length == 0) {
-		elem.prepend('<tbody></tbody>');
-		elem.find('tr').each(function() {
-			$(this).remove().appendTo('#tablelines tbody');
+		if (elem.find('thead').length === 0) {
+			elem.prepend('<thead></thead>');
+			elem.find('tr:first').remove().appendTo('#tablelines thead');
+		}
+
+		elem.floatThead({
+			position: 'fixed',
+			top: <?php print !empty($conf->global->FIXEDTABLEHEAD_THEME_USE_FIXED_TOPBAR)?'$(\'#id-top\').height()':'0'; ?>,
+			zIndex : 50
 		});
 	}
 
-	if(elem.find('thead').length == 0) {
-		elem.prepend('<thead></thead>');
-		elem.find('tr:first').remove().appendTo('#tablelines thead');
-	}
+	var listelem = $('table.liste.listwithfilterbefore:not(.formdoc)');
+	if (listelem.length) {
+		if (listelem.find('tbody').length === 0) {
+			listelem.prepend('<tbody></tbody>');
+			listelem.find('tr').each(function() {
+				$(this).remove().appendTo(listelem.find('tbody'));
+			});
+		}
 
-    elem.floatThead({
-    	position: 'fixed',
-    	top: <?php print !empty($conf->global->FIXEDTABLEHEAD_THEME_USE_FIXED_TOPBAR)?'$(\'#id-top\').height()':'0'; ?>,
-    	zIndex : 50
-    });
-    
-    
-    var listelem = $('table.liste.listwithfilterbefore:not(.formdoc)');
-    
-	if(listelem.find('tbody').length == 0) {
-		listelem.prepend('<tbody></tbody>');
-		listelem.find('tr').each(function() {
-			$(this).remove().appendTo(listelem.find('tbody'));
+		if (listelem.find('thead').length === 0) {
+			listelem.prepend('<thead></thead>');
+			listelem.find('tr.liste_titre').remove().appendTo(listelem.find('thead'));
+			//listelem.find('tr.liste_titre_filter').remove().appendTo(listelem.find('thead'));
+		}
+
+		listelem.floatThead({
+			position: 'fixed',
+			top: <?php print !empty($conf->global->FIXEDTABLEHEAD_THEME_USE_FIXED_TOPBAR)?'$(\'#id-top\').height()':'0'; ?>,
+			zIndex : 50
 		});
+		setTimeout(() => listelem.floatThead('reflow'), 0);
 	}
-	
-	if(listelem.find('thead').length == 0) {
-		listelem.prepend('<thead></thead>');
-		listelem.find('tr.liste_titre').remove().appendTo(listelem.find('thead'));
-		//listelem.find('tr.liste_titre_filter').remove().appendTo(listelem.find('thead'));
-	}
-
-    listelem.floatThead({
-    	position: 'fixed',
-    	top: <?php print !empty($conf->global->FIXEDTABLEHEAD_THEME_USE_FIXED_TOPBAR)?'$(\'#id-top\').height()':'0'; ?>,
-    	zIndex : 50
-    });
 });
