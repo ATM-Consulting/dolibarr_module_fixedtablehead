@@ -101,6 +101,39 @@ class InterfaceFixedTableHeadTriggers extends DolibarrTriggers
 
 	    // Put here code you want to execute when a Dolibarr business events occurs.
 		// Data and type of action are stored into $object and $action
+		if ($action == 'USER_UPDATE_SESSION'){
+			$action = 'USER_MODIFY_SESSION';
+		}
+		if ($action == 'LINEORDER_UPDATE'){
+			$action = 'LINEORDER_MODIFY';
+		}
+		if ($action == 'LINEORDER_SUPPLIER_UPDATE'){
+			$action = 'LINEORDER_SUPPLIER_MODIFY';
+		}
+		if ($action == 'LINEPROPAL_UPDATE'){
+			$action = 'LINEPROPAL_MODIFY';
+		}
+		if ($action == 'LINESUPPLIER_PROPOSAL_UPDATE'){
+			$action = 'LINESUPPLIER_PROPOSAL_MODIFY';
+		}
+		if ($action == 'LINECONTRACT_UPDATE'){
+			$action = 'LINECONTRACT_modify';
+		}
+		if ($action == 'LINEBILL_UPDATE'){
+			$action = 'LINEBILL_MODIFY';
+		}
+		if ($action == 'BILL_SUPPLIER_UPDATE'){
+			$action = 'BILL_SUPPLIER_MODIFY';
+		}
+		if ($action == 'LINEBILL_SUPPLIER_UPDATE'){
+			$action = 'LINEBILL_SUPPLIER_MODIFY';
+		}
+		if ($action == 'DON_UPDATE'){
+			$action = 'DON_MODIFY';
+		}
+		if ($action == 'LINEFICHEINTER_UPDATE'){
+			$action = 'LINEFICHEINTER_MODIFY';
+		}
 
         switch ($action) {
 
@@ -116,7 +149,7 @@ class InterfaceFixedTableHeadTriggers extends DolibarrTriggers
 		    case 'USER_LOGIN':
 		    case 'USER_LOGIN_FAILED':
 		    case 'USER_LOGOUT':
-		    case 'USER_UPDATE_SESSION':      // Warning: To increase performances, this action is triggered only if constant MAIN_ACTIVATE_UPDATESESSIONTRIGGER is set to 1.
+		    case 'USER_MODIFY_SESSION':      // Warning: To increase performances, this action is triggered only if constant MAIN_ACTIVATE_UPDATESESSIONTRIGGER is set to 1.
 
 		        // Actions
 		    case 'ACTION_MODIFY':
@@ -165,7 +198,7 @@ class InterfaceFixedTableHeadTriggers extends DolibarrTriggers
 		    case 'ORDER_CLASSIFY_BILLED':
 		    case 'ORDER_SETDRAFT':
 		    case 'LINEORDER_INSERT':
-		    case 'LINEORDER_UPDATE':
+		    case 'LINEORDER_MODIFY':
 		    case 'LINEORDER_DELETE':
 
 		        // Supplier orders
@@ -180,7 +213,7 @@ class InterfaceFixedTableHeadTriggers extends DolibarrTriggers
 		    case 'ORDER_SUPPLIER_DISPATCH':
 		    case 'LINEORDER_SUPPLIER_DISPATCH':
 		    case 'LINEORDER_SUPPLIER_CREATE':
-		    case 'LINEORDER_SUPPLIER_UPDATE':
+		    case 'LINEORDER_SUPPLIER_MODIFY':
 
 		        // Proposals
 		    case 'PROPAL_CREATE':
@@ -191,7 +224,7 @@ class InterfaceFixedTableHeadTriggers extends DolibarrTriggers
 		    case 'PROPAL_CLOSE_REFUSED':
 		    case 'PROPAL_DELETE':
 		    case 'LINEPROPAL_INSERT':
-		    case 'LINEPROPAL_UPDATE':
+		    case 'LINEPROPAL_MODIFY':
 		    case 'LINEPROPAL_DELETE':
 
 		        // SupplierProposal
@@ -203,7 +236,7 @@ class InterfaceFixedTableHeadTriggers extends DolibarrTriggers
 		    case 'SUPPLIER_PROPOSAL_CLOSE_REFUSED':
 		    case 'SUPPLIER_PROPOSAL_DELETE':
 		    case 'LINESUPPLIER_PROPOSAL_INSERT':
-		    case 'LINESUPPLIER_PROPOSAL_UPDATE':
+		    case 'LINESUPPLIER_PROPOSAL_MODIFY':
 		    case 'LINESUPPLIER_PROPOSAL_DELETE':
 
 		        // Contracts
@@ -214,7 +247,7 @@ class InterfaceFixedTableHeadTriggers extends DolibarrTriggers
 		    case 'CONTRACT_CLOSE':
 		    case 'CONTRACT_DELETE':
 		    case 'LINECONTRACT_INSERT':
-		    case 'LINECONTRACT_UPDATE':
+		    case 'LINECONTRACT_MODIFY':
 		    case 'LINECONTRACT_DELETE':
 
 		        // Bills
@@ -227,19 +260,19 @@ class InterfaceFixedTableHeadTriggers extends DolibarrTriggers
 		    case 'BILL_DELETE':
 		    case 'BILL_PAYED':
 		    case 'LINEBILL_INSERT':
-		    case 'LINEBILL_UPDATE':
+		    case 'LINEBILL_MODIFY':
 		    case 'LINEBILL_DELETE':
 
 		        //Supplier Bill
 		    case 'BILL_SUPPLIER_CREATE':
-		    case 'BILL_SUPPLIER_UPDATE':
+		    case 'BILL_SUPPLIER_MODIFY':
 		    case 'BILL_SUPPLIER_DELETE':
 		    case 'BILL_SUPPLIER_PAYED':
 		    case 'BILL_SUPPLIER_UNPAYED':
 		    case 'BILL_SUPPLIER_VALIDATE':
 		    case 'BILL_SUPPLIER_UNVALIDATE':
 		    case 'LINEBILL_SUPPLIER_CREATE':
-		    case 'LINEBILL_SUPPLIER_UPDATE':
+		    case 'LINEBILL_SUPPLIER_MODIFY':
 		    case 'LINEBILL_SUPPLIER_DELETE':
 
 		        // Payments
@@ -255,7 +288,7 @@ class InterfaceFixedTableHeadTriggers extends DolibarrTriggers
 
 		        // Donation
 		    case 'DON_CREATE':
-		    case 'DON_UPDATE':
+		    case 'DON_MODIFY':
 		    case 'DON_DELETE':
 
 		        // Interventions
@@ -264,7 +297,7 @@ class InterfaceFixedTableHeadTriggers extends DolibarrTriggers
 		    case 'FICHINTER_VALIDATE':
 		    case 'FICHINTER_DELETE':
 		    case 'LINEFICHINTER_CREATE':
-		    case 'LINEFICHINTER_UPDATE':
+		    case 'LINEFICHINTER_MODIFY':
 		    case 'LINEFICHINTER_DELETE':
 
 		        // Members
